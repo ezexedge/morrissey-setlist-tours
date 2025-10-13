@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎵 Morrissey Live Stats — Next.js + n8n + Google Sheets + Redis
 
-## Getting Started
+Una aplicación que recopila, analiza y muestra estadísticas de canciones tocadas por **Morrissey** en sus conciertos, utilizando automatización con **n8n**, persistencia en **Google Sheets**, y cacheo eficiente con **Redis**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ⚙️ Flujo de Datos
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Scraping automático (n8n)**
+   - Cada **24 horas**, un flujo de **n8n** realiza scraping sobre [setlist.fm](https://www.setlist.fm/).
+   - Extrae la lista de **conciertos recientes** y **todas las canciones tocadas**.
+   - Limpia y estructura los datos (nombre de la canción, cantidad de veces tocada, probabilidad, etc.).
+   - Guarda los resultados procesados en una hoja de cálculo de **Google Sheets**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Persistencia en Google Sheets**
+   - Google Sheets actúa como una **base de datos ligera**.
+   - Contiene las columnas principales:
+     - `song`, `plays`, `percent`, `prob_next`, `tier`, `era`, `comment`
+   - Este archivo es actualizado automáticamente por n8n.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Next.js (Frontend)**
+   - La aplicación Next.js consume la información desde la **API de Google Sheets**.
+   - Dado que Google Sheets **no soporta alto volumen de requests**, la app utiliza un sistema de **cacheo en Redis**.
+   - Cuando se realiza una consulta:
+     1. Se busca primero en **Redis**.
+     2. Si no hay datos cacheados, se consulta **Google Sheets**.
+     3. Los resultados se guardan temporalmente en Redis con un **TTL configurable** (por ejemplo, 6 horas).
 
-## Learn More
+4. **Redis (Cache Layer)**
+   - Acelera las respuestas y reduce la carga sobre Google Sheets.
+   - Permite servir miles de peticiones por minuto sin alcanzar los límites de la API.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Tecnologías Utilizadas
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Tecnología | Rol | Descripción |
+|-------------|-----|-------------|
+| **Next.js 14** | Frontend SSR/ISR | Renderizado dinámico y estático de estadísticas y rankings. |
+| **Redis** | Cache | Almacén en memoria para respuestas rápidas. |
+| **Google Sheets API** | Base de datos ligera | Almacena los datos agregados desde n8n. |
+| **n8n** | Automatización | Scraping programado y procesamiento de datos. |
+| **Node.js** | Backend común | Entorno de ejecución de todos los servicios. |
+| **Setlist.fm (Web Scraping)** | Fuente de datos | Información pública de conciertos y setlists. |
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
