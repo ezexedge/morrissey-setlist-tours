@@ -1,10 +1,10 @@
-# 🎵 Morrissey Live Stats — Next.js + n8n + Google Sheets + Redis
+# Morrissey Live Stats — Next.js + n8n + Google Sheets + Redis
 
 Una aplicación que recopila, analiza y muestra estadísticas de canciones tocadas por **Morrissey** en sus conciertos, utilizando automatización con **n8n**, persistencia en **Google Sheets**, y cacheo eficiente con **Redis**.
 
 ---
 
-## ⚙️ Flujo de Datos
+##  Flujo de Datos
 
 1. **Scraping automático (n8n)**
    - Cada **24 horas**, un flujo de **n8n** realiza scraping sobre [setlist.fm](https://www.setlist.fm/).
@@ -32,7 +32,7 @@ Una aplicación que recopila, analiza y muestra estadísticas de canciones tocad
 
 ---
 
-## 🚀 Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 | Tecnología | Rol | Descripción |
 |-------------|-----|-------------|
