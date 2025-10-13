@@ -4,7 +4,7 @@ Una aplicación que recopila, analiza y muestra estadísticas de canciones tocad
 
 ---
 
-##  Flujo de Datos
+## ⚙️ Flujo de Datos
 
 1. **Scraping automático (n8n)**
    - Cada **24 horas**, un flujo de **n8n** realiza scraping sobre [setlist.fm](https://www.setlist.fm/).
@@ -32,12 +32,12 @@ Una aplicación que recopila, analiza y muestra estadísticas de canciones tocad
 
 ---
 
-## Tecnologías Utilizadas
+## 🧰 Tecnologías Utilizadas
 
 | Tecnología | Rol | Descripción |
 |-------------|-----|-------------|
 | **Next.js 14** | Frontend SSR/ISR | Renderizado dinámico y estático de estadísticas y rankings. |
-| **Redis** | Cache | Almacén en memoria para respuestas rápidas. |
+| **Upstash Redis** | Cache | Almacén en memoria distribuido sin servidor (serverless) para respuestas rápidas. |
 | **Google Sheets API** | Base de datos ligera | Almacena los datos agregados desde n8n. |
 | **n8n** | Automatización | Scraping programado y procesamiento de datos. |
 | **Node.js** | Backend común | Entorno de ejecución de todos los servicios. |
@@ -45,3 +45,8 @@ Una aplicación que recopila, analiza y muestra estadísticas de canciones tocad
 
 ---
 
+## 🖼️ Diagrama de Arquitectura
+
+![System Architecture](./diagram.png)
+
+---
