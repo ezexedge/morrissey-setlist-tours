@@ -1,11 +1,14 @@
 import MorrisseyClientWrapper from "@/components/morrissey-client-wrapper"
 import { getSetlistData } from "@/lib/actions/google-sheet"
+import { getRecentSetlistData } from "@/lib/actions/set-list"
 import { RedisService } from "@/lib/services/Redis.service"
 import { formatDate } from "@/utils/date"
 import { orderedByPlays } from "@/utils/orderedByPlays"
 
 
 export default async function MorrisseySetlistsPage() {
+
+  const recentSetListData = await getRecentSetlistData();
 
   const date = new Date()
  const dateResult = formatDate(date)
@@ -18,7 +21,7 @@ export default async function MorrisseySetlistsPage() {
 
   const orderedByPlaysData = orderedByPlays(getCache)
   
-   return <MorrisseyClientWrapper data={orderedByPlaysData} />
+   return <MorrisseyClientWrapper data={orderedByPlaysData} recentData={recentSetListData.data} />
  }
 
   const result = await getSetlistData()
@@ -27,7 +30,6 @@ export default async function MorrisseySetlistsPage() {
 
 
   const twoDaysInSeconds = 172800
-console.log("setlistData",setlistData)
   await RedisService.set(cacheKey,setlistData,twoDaysInSeconds)
   
   if (!result.success) {
@@ -36,5 +38,5 @@ console.log("setlistData",setlistData)
     console.log('[MORRISSEY-SSR] Successfully loaded', setlistData?.length || 0, 'rows')
   }
 
-  return <MorrisseyClientWrapper data={setlistData} />
+  return <MorrisseyClientWrapper data={setlistData} recentData={recentSetListData.data} />
 }

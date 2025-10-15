@@ -5,6 +5,7 @@ import SongStatsView from "@/components/song-stats-view"
 
 import { Jost, Rosarivo } from "next/font/google"
 import Footer from "./footer"
+import RecentSetlists from "./recent-setlists"
 
 const jost = Jost({
   variable: "--font-jost-sans",
@@ -42,9 +43,10 @@ const theme = createTheme({
 
 interface Props {
   data: any
+  recentData: any
 }
 
-export default function MorrisseyClientWrapper({ data }: Props) {
+export default function MorrisseyClientWrapper({ data,recentData }: Props) {
   return (
     <div className={`${jost.variable} ${rosarivo.variable}`}>
       <ThemeProvider theme={theme}>
@@ -79,6 +81,12 @@ export default function MorrisseyClientWrapper({ data }: Props) {
 </Typography>
 
             </Box>
+
+      <div className="mb-8">
+        <RecentSetlists data={recentData} />
+      </div>
+
+      <div></div>
 
             {!data ? (
               <Box sx={{ textAlign: "center", py: 4 }}>

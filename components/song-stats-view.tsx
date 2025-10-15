@@ -14,8 +14,7 @@ import {
   LinearProgress,
   Chip,
 } from "@mui/material"
-import { TrendingUp, Flight, Whatshot } from "@mui/icons-material"
-import { getSongStatistics } from "@/lib/setlist-data"
+import { TrendingUp, Whatshot } from "@mui/icons-material"
 
 export interface SongData{
  song: string;

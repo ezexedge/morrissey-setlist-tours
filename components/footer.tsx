@@ -25,7 +25,7 @@ export default function Footer() {
       <Typography variant="body2" color="#bdbdbd">
         © {year}{" "}
         <Link
-          href="https://200hub.com"
+          href="https://www.200hub.tech/"
           target="_blank"
           rel="noopener noreferrer"
           underline="hover"
