@@ -27,6 +27,7 @@ export default async function MorrisseySetlistsPage() {
   const result = await getSetlistData()
 
   const setlistData = result.success ? result.data : null
+  const orderedByPlaysData = orderedByPlays(setlistData)
 
 
   const twoDaysInSeconds = 172800
@@ -38,5 +39,5 @@ export default async function MorrisseySetlistsPage() {
     console.log('[MORRISSEY-SSR] Successfully loaded', setlistData?.length || 0, 'rows')
   }
 
-  return <MorrisseyClientWrapper data={setlistData} recentData={recentSetListData.data} />
+  return <MorrisseyClientWrapper data={orderedByPlaysData} recentData={recentSetListData.data} />
 }
