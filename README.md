@@ -47,6 +47,6 @@ Una aplicación que recopila, analiza y muestra estadísticas de canciones tocad
 
 ## 🖼️ Diagrama de Arquitectura
 
-![System Architecture](./diagram.png)
+![System Architecture](./diagram-export-10-13-2025-12_06_05-AM.png)
 
 ---
